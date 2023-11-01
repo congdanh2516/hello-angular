@@ -1,0 +1,91 @@
+<p>this is product-list-component</p>
+<h1>(Data Binding) Truyền dữ liệu giữa file component (.ts) và file template/view (.html)</h1>
+<h2>1. Truyền từ .ts sang .html</h2>
+<h3>1.1. Interpolation, ký hiệu: <span>{{ </span> <i>biến, hàm, toán tử 3 ngôi</i> <span> }}</span></h3>
+<p>Hello, {{ name }}</p>
+<p>{{ age >= 18? "Du 18 tuoi" : "Chua du 18 tuoi" }}</p>
+
+<h3>1.2. Property Binding, src của img, value cua input, select,..., ky hiệu [ <i>property_name</i> ] = " <i>biến, biểu thức so sánh, toán tử 3 ngôi</i> "</h3>
+<img [src]="imgUrl" alt="" height="50px">
+<img src="{{imgUrl}}" alt="" height="50px">
+<br>
+<input type="text" [value]="name">
+<br>
+<input type="text" value="{{name}}">
+<br>
+<select name="" id="" [value]="selected">
+    <option value="1">Lua chon 1</option>
+    <option value="2">Lua chon 2</option>
+    <option value="3">Lua chon 3</option>
+</select>
+
+<h3>1.3. Class Binding, Class bật lên khi nào, ký hiệu: [ class.<i>class_name</i> ] = " <i>biến, biểu thức so sánh, toán tử 3 ngôi</i> "</h3>
+<div class="message">
+    <div class="message__border" 
+        [class.message__border--sucess]="status"
+        [class.message__border--failed]="!status"
+        ></div>
+    <div class="message__content">
+        Content message
+    </div>
+</div>
+
+<h3>1.3. Style Binding, Style được bật lên khi nào [ style.<i>style_name</i> ] = " <i>biến, biểu thức so sánh, toán tử 3 ngôi</i> "</h3>
+<div [style.background-color] = "color">
+    {{ name }}
+</div>
+<div [style.background-color] = "'red'">
+    {{ name }}
+</div>
+
+
+<h2>2. Truyền từ .html sang .ts</h2>
+<h3>Sử dụng Event Binding, ký kiện ( <i>event_name</i> ) = " <i>caulenhdon/ham</i> "</h3>
+<button (click)="showMessage('Angular')">Show</button>
+<br>
+<input type="text" (blur)="getContent($event)">
+
+
+<h2>Two-way Binding - Truyền dữ liệu/Đồng bộ hóa dữ liệu giữa file .ts và .html</h2>
+<h3>Ký hiệu [(ngModel)]=" <i>biến</i> "</h3>
+<h3>Trước khi sử dụng phải import "FormsModule" vao app.module</h3>
+<input type="text" [(ngModel)]="name">
+
+<p>{{ name }}</p>
+
+<h1>Directive</h1>
+<h2>*ngIf, ký hiệu *ngIf = " <i>biến, biểu thức so sánh, toán tử 3 ngôi,...</i> "</h2>
+<h3 *ngIf="true"> Hello </h3>
+<h3 *ngIf="count > 0; else negativeBlock">Số dương</h3>
+<ng-template #negativeBlock>
+    Số âm
+</ng-template>
+
+<h2>*ngFor, ký hiệu *ngFor = "let <i>ten_bien</i> of <i>mang</i> " </h2>
+<p *ngFor="let item of numberArray">
+    {{item }}
+</p>
+
+<p *ngFor="let product of productList">
+    Name: {{product.name}}, {{ product.price}}
+</p>
+
+<h1>2. Truyền dữ liệu giữa 2 component</h1>
+<h2>2.1. Truyền từ component cha sang component con</h2>
+<h3>Sử dụng @Input()</h3>
+<h3>Bước 1: Khai báo biến @Input trong component con, sử dụng biến như biến bình thường</h3>
+<h3>Bước 2: TRong component cha, tại thẻ mở của component con sử dụng cú pháp " [ <i>tên biến khai báo bên component con</i> ] = " <i>chuỗi hoặc biến của component cha</i> " " </h3>
+<app-product-card *ngFor="let product of productList" [nameProduct]="product.name" [price]="product.price">
+</app-product-card>
+
+<h1>3. Angular Service, HttpClient gọi API</h1>
+<h3>Bước 1: Import HttpClientModule vap app module</h3>
+<h3>Bước 2: Tạo service: tạo thư mục; tại thư mục vừa tạo sử dụng lệnh " ng g s <i>service_name</i> "</h3>
+<h3>Bước 3: Trong file service vừa tạo: import HttpClient và khai bao biến HttpClient như là 1 tham số của hàm xây dựng</h3>
+<h3>Bước 4: Tạo hàm gọi api</h3>
+<h3>Bước 5: Trong file .ts component cần gọi service: khai báo service trong hàm xây dựng</h3>
+<h3>BƯớc 6: Viết hàm gọi đến hàm trong service</h3>
+
+<button (click)="addNewProduct()">Add Product</button>
+
+<div style="height: 400px;"></div>
